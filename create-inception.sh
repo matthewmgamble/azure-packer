@@ -5,7 +5,7 @@ REGION=$2
 VM_NAME=$3
 VM_USERNAME=$4
 VM_PASSWORD=$5
-VM_SIZE=$6
+VM_SIZE="Standard_D4s_v3"
 
 #Create resource group if not exists
 VM_EXISTS=$(az group exists -g $RESOURCE_GROUP)
