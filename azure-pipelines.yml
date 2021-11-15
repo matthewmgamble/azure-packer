@@ -1,4 +1,29 @@
 # Starter pipeline
+- task: DeployBuilderVM
+  inputs:
+    azureSubscription: 'Azure subscription 1(dc734ec3-62f5-478f-8de6-cfd13e8d579d)'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'create-inception.sh'
+    arguments: '$(resource-group) $(region) $(vm-name) $(vm-password)'
+
+- task: RunPackerBuild
+  inputs:
+    azureSubscription: 'Azure subscription 1(dc734ec3-62f5-478f-8de6-cfd13e8d579d)'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'run-packer-build.sh'
+    arguments: '$(resource-group) $(vm-name)'
+
+- task: VHD Upload
+  inputs:
+    azureSubscription: 'Azure subscription 1(dc734ec3-62f5-478f-8de6-cfd13e8d579d)'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'run-upload-vhd.sh'
+    arguments: '$(resource-group) $(vm-name) $(storage-account-name) $(storage-container-name) $(base-image-name) $(Build.BuildId)'
+
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
